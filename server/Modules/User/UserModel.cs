@@ -5,7 +5,6 @@ using System.Collections.Generic;
 
 namespace Visits.Models
 {
-    [Table("users")]
     public class UserModel : BaseEntity
     {
         public UserModel()

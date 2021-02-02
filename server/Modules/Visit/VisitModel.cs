@@ -6,7 +6,6 @@ using System.Collections.Generic;
 
 namespace Visits.Models
 {
-    [Table("visits")]
     public class VisitModel : BaseEntity
     {
         public VisitModel()
