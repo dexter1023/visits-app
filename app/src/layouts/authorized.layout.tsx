@@ -1,0 +1,1 @@
+export const AuthorizedLayout = () => <div>Authorized</div>
