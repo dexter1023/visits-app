@@ -14,3 +14,5 @@ export const login = async (payload: AuthRequest): Promise<AuthResponse> => {
 export const logout = () => {
   localStorage.removeItem('token')
 }
+
+export const loggedIn = () => !!localStorage.getItem('token')

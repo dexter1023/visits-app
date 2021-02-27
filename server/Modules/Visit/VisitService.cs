@@ -86,7 +86,7 @@ namespace Visits.Services
         async Task<List<VisitModel>> GetVisitsByDate(int userId, string date)
         {
             string[] dateFormats = { "yyyy-MM-dd", "dd-MM-yyyy", "dd/MM/yyyy" };
-            if (DateUtils.ValidateDate(date, dateFormats))
+            if (date != null && DateUtils.ValidateDate(date, dateFormats))
             {
                 var from = DateTime.Parse(date);
                 var to = DateTime.Parse(date).AddDays(1);

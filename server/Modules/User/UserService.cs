@@ -55,9 +55,9 @@ namespace Visits.Services
             return false;
         }
 
-        public UserPayload Authenticate(string username, string password)
+        public UserPayload Authenticate(string email, string password)
         {
-            UserModel user = context.Users.Single(user => user.email == username);
+            UserModel user = context.Users.Single(user => user.email == email);
             if (user == null || !BCrypt.Net.BCrypt.Verify(password, user.password))
             {
                 return null;

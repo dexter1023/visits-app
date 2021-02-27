@@ -38,7 +38,7 @@ namespace Visits.Controllers
         [HttpPost("login")]
         public IActionResult Authenticate([FromBody] AuthenticateModel auth)
         {
-            var user = userService.Authenticate(auth.Username, auth.Password);
+            var user = userService.Authenticate(auth.Email, auth.Password);
             if (user == null)
             {
                 return Unauthorized(new { message = "Bad credentials" });

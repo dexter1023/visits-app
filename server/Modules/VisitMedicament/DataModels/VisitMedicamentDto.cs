@@ -14,7 +14,7 @@ namespace Visits.Modules.VisitMedicament
         public string duration { get; set; }
     }
 
-    public class VisitMediamentResponseDto
+    public class VisitMedicamentResponseDto
     {
         public int id { get; set; }
         public string name { get; set; }

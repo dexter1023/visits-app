@@ -25,7 +25,7 @@ namespace Visits.Services
         public async Task<List<PatientListDto>> GetPatientsList(int userId, PatientQueryDto query)
         {
             var patients = await GetPatientsFromQuery(userId, query);
-            var response = mapper.Map<List<PatientListDto>>(patients);
+            var response = mapper.Map<List<PatientModel>, List<PatientListDto>>(patients);
             return response;
         }
 
@@ -33,11 +33,6 @@ namespace Visits.Services
         {
             return await context
                 .Patients
-                .Where(p =>
-                    p.firstName.Contains(query.search) ||
-                    p.lastName.Contains(query.search) ||
-                    p.email.Contains(query.search) ||
-                    p.identityNumber.Contains(query.search))
                 .Where(p => p.userId == userId)
                 .ToListAsync();
         }
@@ -52,7 +47,7 @@ namespace Visits.Services
                 .ThenInclude(v => v.measurements)
                 .Include(p => p.visits)
                 .ThenInclude(v => v.medicaments)
-                .ToListAsync();
+                .FirstOrDefaultAsync();
             var response = mapper.Map<PatientDetailsResponseDto>(patient);
             return response;
         }

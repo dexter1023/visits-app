@@ -9,7 +9,6 @@ namespace Visits.Modules.Visit
 {
     public class CreateVisitRequestDto
     {
-
         [Required]
         public string visitDate { get; set; }
 
@@ -64,7 +63,7 @@ namespace Visits.Modules.Visit
 
         public List<VisitMeasurementResponseDto> measurements { get; set; }
 
-        public List<VisitMediamentResponseDto> medicaments { get; set; }
+        public List<VisitMedicamentResponseDto> medicaments { get; set; }
     }
 
     public class VisitPatientResponseDto
@@ -85,7 +84,7 @@ namespace Visits.Modules.Visit
 
         public List<VisitMeasurementResponseDto> measurements { get; set; }
 
-        public List<VisitMediamentResponseDto> medicaments { get; set; }
+        public List<VisitMedicamentResponseDto> medicaments { get; set; }
     }
 
     public class VisitQueryDto

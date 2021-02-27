@@ -1,7 +1,8 @@
 import { Grid } from "@material-ui/core"
 import React, {FC} from 'react'
-import {Switch} from 'react-router-dom'
-import UnauthenticateRoute from '../utils/unauthenticate-route'
+import {Redirect, Route, Switch} from 'react-router-dom'
+import { LoginPage } from "../pages/login.page"
+import {RegistrationPage} from '../pages/registration.page'
 
 const containerStyle = {
     width: '100vw',
@@ -10,10 +11,13 @@ const containerStyle = {
 
 export const UnauthorizedLayout: FC = ({children}) => (
     <Grid container justify='center' alignItems='center' style={containerStyle} >
-        <Switch>
-            <UnauthenticateRoute >
+            <Switch>
+                <Route path="/login" component={LoginPage} />
+                <Route path="/rejestracja" component={RegistrationPage} />
+                <Route path="*">
+                    <Redirect to="/login"/>
+                </Route>
 
-            </UnauthenticateRoute>
-        </Switch>
+            </Switch>
     </Grid>
 )

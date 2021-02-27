@@ -27,6 +27,7 @@ Icon
 dabasase.env
 obj
 
+.eslintcache
 # Thumbnails
 ._*
 

@@ -11,6 +11,7 @@ using Microsoft.OpenApi.Models;
 using Visits.Core.DatabaseContext;
 using Visits.Services;
 using AutoMapper;
+using Visits.Core.AutoMapper;
 
 namespace Server
 {
@@ -65,7 +66,13 @@ namespace Server
                 };
             });
 
-            services.AddAutoMapper(typeof(Startup));
+            var mapperConfig = new MapperConfiguration(mc =>
+            {
+                mc.AddProfile(new MappingProfile());
+            });
+
+            IMapper mapper = mapperConfig.CreateMapper();
+            services.AddSingleton(mapper);
             services.AddScoped<VisitService>();
             services.AddScoped<PatientService>();
             services.AddScoped<UserService>();
@@ -92,9 +99,14 @@ namespace Server
                 app.UseHsts();
             }
 
+
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseCors();
+
+            app.UseAuthentication();
 
             app.UseAuthorization();
 

@@ -110,7 +110,6 @@ namespace Visits.Modules.Patient
 
         public string lastName { get; set; }
 
-        [EmailAddress]
         public string email { get; set; }
 
         public string identityNumber { get; set; }
