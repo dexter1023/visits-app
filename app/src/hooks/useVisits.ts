@@ -6,7 +6,7 @@ import { formatDate } from '../utils/date.utils'
 export const useVisits = (date: Date) => {
   return useQuery(['visits', date], async () => {
     const { data } = await api.get<VisitListItem[]>('/visits', {
-      params: { date: formatDate(date) },
+      params: { date: formatDate(date.toISOString()) },
     })
     return data
   })
