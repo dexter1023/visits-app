@@ -5,7 +5,6 @@ import DialogActions from '@material-ui/core/DialogActions'
 import DialogTitle from '@material-ui/core/DialogTitle'
 import Button from '@material-ui/core/Button'
 import TextField from '@material-ui/core/TextField'
-import { useForm } from 'react-hook-form'
 import { useVisitMutation } from '../hooks/useVisits'
 import { useSnackbarContext } from '../context/snackbar.context'
 import { CreateVisitRequest } from '../models/visits.model'
@@ -23,7 +22,7 @@ interface AddVisitProps {
 export const AddVisit: FC<AddVisitProps> = ({ open, onClose, patientId }) => {
   const [request, setRequest] = useState<CreateVisitRequest>({
     patientId: 0,
-    visitDate: '',
+    visitDate: formatDate(new Date().toISOString()),
   })
   const [inputSearch, setInputSearch] = useState<string>('')
   const [search, setSearch] = useState<string>('')
@@ -56,11 +55,12 @@ export const AddVisit: FC<AddVisitProps> = ({ open, onClose, patientId }) => {
   }
 
   const handleSubmitForm = () => {
-    console.log(request)
     if (request.patientId > 0 && request.visitDate !== '') {
       mutation.mutate(request, {
-        onSuccess: () =>
-          snackbarContext.open('Poprawnie dodano wizytę', 'success'),
+        onSuccess: () => {
+          snackbarContext.open('Poprawnie dodano wizytę', 'success')
+          onClose()
+        },
         onError: () =>
           snackbarContext.open('Błąd przy dodawaniu wizytę', 'error'),
       })
@@ -77,7 +77,10 @@ export const AddVisit: FC<AddVisitProps> = ({ open, onClose, patientId }) => {
               <Grid item>
                 <Grid container direction="column">
                   <Grid item>
-                    <TextField label="Szukaj" onChange={handleChangeSearch} />
+                    <TextField
+                      label="Szukaj pacjenta"
+                      onChange={handleChangeSearch}
+                    />
                     <Button onClick={handleClickSearch}>Szukaj</Button>
                   </Grid>
                   <Grid item>
@@ -88,6 +91,7 @@ export const AddVisit: FC<AddVisitProps> = ({ open, onClose, patientId }) => {
                       placeholder="Pacjent"
                       required
                       onChange={handleChange}
+                      style={{ width: '100%' }}
                     >
                       {data?.map((el) => (
                         <MenuItem key={el.id} value={el.id}>
@@ -115,7 +119,7 @@ export const AddVisit: FC<AddVisitProps> = ({ open, onClose, patientId }) => {
       </DialogContent>
       <DialogActions>
         <Button onClick={onClose}>Zamknij</Button>
-        <Button onClick={handleSubmitForm}>Dodaj pacjenta</Button>
+        <Button onClick={handleSubmitForm}>Dodaj wizytę</Button>
       </DialogActions>
     </Dialog>
   )

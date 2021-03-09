@@ -59,7 +59,7 @@ namespace Visits.Modules.Visit
 
         public string recommendations { get; set; }
 
-        public PatientVisitResponseDto patient { get; set; }
+        public PatientDetailsResponseDto patient { get; set; }
 
         public List<VisitMeasurementResponseDto> measurements { get; set; }
 

@@ -1,10 +1,10 @@
-import { PatientVisit } from './patient.model'
+import { PatientModel, PatientVisit } from './patient.model'
 import { MeasurementVisit } from './measurement.model'
 import { MedicamentVisit } from './medicament.model'
 
 export interface VisitListItem {
   id: number
-  vistiDate: string
+  visitDate: string
   patient: PatientVisit
 }
 
@@ -15,6 +15,7 @@ export interface VisitPatient {
   visitDateEnd: string
   isCompleted: boolean
   description: string
+  patient: PatientModel
   recommendations: string
   measurements: MeasurementVisit[]
   medicaments: MedicamentVisit[]
@@ -23,4 +24,12 @@ export interface VisitPatient {
 export interface CreateVisitRequest {
   patientId: number
   visitDate: string
+}
+
+export interface ExecutedVisitPayload {
+  id: number
+  description: string
+  recommendations: string
+  measurements: MeasurementVisit[]
+  medicaments: MedicamentVisit[]
 }

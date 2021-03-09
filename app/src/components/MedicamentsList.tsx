@@ -5,6 +5,7 @@ import TableCell from '@material-ui/core/TableCell'
 import TableContainer from '@material-ui/core/TableContainer'
 import TableHead from '@material-ui/core/TableHead'
 import TableRow from '@material-ui/core/TableRow'
+import Table from '@material-ui/core/Table'
 
 interface MedicamentsListProps {
   data: MedicamentVisit[]
@@ -12,19 +13,23 @@ interface MedicamentsListProps {
 
 export const MedicamentsList: FC<MedicamentsListProps> = ({ data }) => (
   <TableContainer>
-    <TableHead>
-      <TableCell>Nazwa</TableCell>
-      <TableCell>Dawka</TableCell>
-      <TableCell>Czas podawania</TableCell>
-    </TableHead>
-    <TableBody>
-      {data.map((medicament) => (
+    <Table>
+      <TableHead>
         <TableRow>
-          <TableCell>{medicament.name}</TableCell>
-          <TableCell>{medicament.dose}</TableCell>
-          <TableCell>{medicament.duration}</TableCell>
+          <TableCell>Nazwa</TableCell>
+          <TableCell>Dawka</TableCell>
+          <TableCell>Czas podawania</TableCell>
         </TableRow>
-      ))}
-    </TableBody>
+      </TableHead>
+      <TableBody>
+        {data.map((medicament) => (
+          <TableRow>
+            <TableCell>{medicament.name}</TableCell>
+            <TableCell>{medicament.dose}</TableCell>
+            <TableCell>{medicament.duration}</TableCell>
+          </TableRow>
+        ))}
+      </TableBody>
+    </Table>
   </TableContainer>
 )

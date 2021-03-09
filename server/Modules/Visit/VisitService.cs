@@ -45,12 +45,33 @@ namespace Visits.Services
             {
                 throw new ArgumentOutOfRangeException("There is no visit");
             }
-            else
+
+            visitModel.visitDateEnd = DateTime.UtcNow;
+            visitModel.isCompleted = true;
+
+            visit.measurements.ForEach((element) =>
             {
-                visitModel.visitDateEnd = DateTime.UtcNow;
-                context.Entry(visitModel).CurrentValues.SetValues(visit);
-                await context.SaveChangesAsync();
-            }
+                var visitMeasurement = new VisitMeasurementModel
+                {
+                    name = element.name,
+                    value = element.value,
+                };
+                visitModel.measurements.Add(visitMeasurement);
+            });
+
+            visit.medicaments.ForEach((element) =>
+            {
+                var visitMedicament = new VisitMedicamentModel
+                {
+                    name = element.name,
+                    dose = element.dose,
+                    duration = element.duration
+                };
+                visitModel.medicaments.Add(visitMedicament);
+            });
+
+            context.Entry(visitModel).CurrentValues.SetValues(visit);
+            await context.SaveChangesAsync();
         }
 
         async Task<VisitModel> GetVisitById(int userId, int visitId)
@@ -59,6 +80,7 @@ namespace Visits.Services
                 .Visits
                 .Where(v => v.userId == userId)
                 .Where(v => v.id == visitId)
+                .Include(v => v.patient)
                 .FirstOrDefaultAsync();
             return visit;
         }
@@ -72,7 +94,8 @@ namespace Visits.Services
                 {
                     visitDate = DateTime.Parse(visit.visitDate),
                     patientId = visit.patientId,
-                    userId = userId
+                    userId = userId,
+                    isCompleted = false
                 };
 
                 context.Visits.Add(visitModel);
@@ -92,8 +115,8 @@ namespace Visits.Services
                 var to = DateTime.Parse(date).AddDays(1);
                 var visits = await context
                     .Visits
-                    .Where(v => v.visitDate > from)
-                    .Where(v => v.visitDate <= to)
+                    .Where(v => v.visitDate >= from)
+                    .Where(v => v.visitDate < to)
                     .Where(v => v.userId == userId)
                     .Include(v => v.patient)
                     .ToListAsync();

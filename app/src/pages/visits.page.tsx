@@ -1,4 +1,4 @@
-import { FC, useState, useEffect } from 'react'
+import { FC, useState } from 'react'
 import Grid from '@material-ui/core/Grid'
 import TextField from '@material-ui/core/TextField'
 import { useVisits } from '../hooks/useVisits'
@@ -10,16 +10,16 @@ import { AddVisit } from '../components/AddVisit'
 export const VisitsPage: FC = () => {
   const [date, setDate] = useState<Date>(new Date())
   const [visitModal, setVisitModal] = useState<boolean>(false)
+  const { data, refetch } = useVisits(date)
 
   const handleCloseModal = () => {
     setVisitModal(false)
+    refetch()
   }
 
   const handleOpenModal = () => {
     setVisitModal(true)
   }
-
-  const { data } = useVisits(date)
 
   const handleDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setDate(new Date(e.target.value))

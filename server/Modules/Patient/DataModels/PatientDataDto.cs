@@ -85,6 +85,8 @@ namespace Visits.Modules.Patient
         public string identityNumber { get; set; }
 
         public string phoneNumber { get; set; }
+
+        public string interview { get; set; }
     }
 
     public class PatientListDto
